@@ -1,6 +1,6 @@
 import { SkillCategoriesMap, ColorCategorizedSkill } from '../../types/skills';
-import { TAILWIND_SKILLS_COLORS } from '@/config/theme';
 import { getSkillsCategories } from '../repos/skills.repo';
+import { SKILLS_COLORS } from '../../config/theme';
 
 export async function getSkillsCategoriesMap(): Promise<SkillCategoriesMap> {
 	const skillsCategories = await getSkillsCategories();
@@ -8,7 +8,7 @@ export async function getSkillsCategoriesMap(): Promise<SkillCategoriesMap> {
 	const result: SkillCategoriesMap = {};
 
 	let i = 0;
-	const colors = TAILWIND_SKILLS_COLORS;
+	const colors = SKILLS_COLORS;
 
 	for (const row of skillsCategories) {
 		if (!result[row.category]) {
