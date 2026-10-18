@@ -1,4 +1,8 @@
-import { CommissionsForCreatorsDto, CommissionVideoRow, VideoWithDate } from '../../types/videos';
+import type {
+	CommissionsForCreatorsDto,
+	CommissionVideoRow,
+	VideoWithDate
+} from '../../types/videos';
 import { getCommissionVideoRows } from '../repos/videos.repo';
 import { fetchBatchedVideoStats, fetchCreatorChannelInfo } from '../utils/video.utils';
 

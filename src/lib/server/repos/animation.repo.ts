@@ -1,6 +1,6 @@
 import { db } from '../db';
 import { animationProjects, skills, animationSkills } from '../db/migrations/schema';
-import { AnimationProject } from '../../types/animation';
+import type { AnimationProject } from '../../types/animation';
 
 import { desc, eq, sql } from 'drizzle-orm';
 

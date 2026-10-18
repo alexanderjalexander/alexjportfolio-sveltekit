@@ -1,6 +1,6 @@
 import { getMotionGraphics } from '../repos/motion-graphics.repo';
 import { getColorCategorizedSkills } from '../services/skills.service';
-import { MotionGraphicsProjectDto } from '../../types/motion-graphics';
+import type { MotionGraphicsProjectDto } from '../../types/motion-graphics';
 
 export async function getMotionGraphicsWithColoredSkills(): Promise<MotionGraphicsProjectDto[]> {
 	const projects = await getMotionGraphics();

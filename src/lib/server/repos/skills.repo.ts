@@ -1,6 +1,6 @@
 import { db } from '../db';
 import { skills, categories, skillCategory } from '../db/migrations/schema';
-import { SkillCategoryRow } from '../../types/skills';
+import type { SkillCategoryRow } from '../../types/skills';
 
 import { eq } from 'drizzle-orm';
 

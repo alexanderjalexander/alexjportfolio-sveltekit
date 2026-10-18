@@ -2,7 +2,7 @@ import {
 	getWorkExperienceJobRows,
 	getWorkExperienceSkillRows
 } from '../repos/work-experience.repo';
-import { WorkExperienceJob, WorkExperienceJobDto } from '../../types/work-experience';
+import type { WorkExperienceJob, WorkExperienceJobDto } from '../../types/work-experience';
 import { getColorCategorizedSkills } from '../services/skills.service';
 
 export async function getSkillsByJob(): Promise<Map<number, string[]>> {

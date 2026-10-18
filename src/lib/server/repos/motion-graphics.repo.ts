@@ -1,7 +1,7 @@
 import { db } from '../db';
 import { motionGraphicsProjects, skills, motionGraphicsSkills } from '../db/migrations/schema';
 
-import { MotionGraphicsProject } from '../../types/motion-graphics';
+import type { MotionGraphicsProject } from '../../types/motion-graphics';
 
 import { desc, eq, sql } from 'drizzle-orm';
 

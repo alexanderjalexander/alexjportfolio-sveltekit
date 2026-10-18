@@ -2,9 +2,6 @@ import { defineEnvVars } from '@sveltejs/kit/env';
 
 export const variables = defineEnvVars({
 	// Database stuff
-	DATABASE_URL: {
-		description: 'The database connection string.'
-	},
 	HOMELAB_DATABASE_URL: {
 		description: 'Primary Homelab Database connection string.'
 	},

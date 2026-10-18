@@ -1,6 +1,6 @@
 import { getAnimationProjects } from '../repos/animation.repo';
 import { getColorCategorizedSkills } from '../services/skills.service';
-import { AnimationProjectDto } from '../../types/animation';
+import type { AnimationProjectDto } from '../../types/animation';
 
 export async function getAnimationProjectsWithColoredSkills(): Promise<AnimationProjectDto[]> {
 	const projects = await getAnimationProjects();

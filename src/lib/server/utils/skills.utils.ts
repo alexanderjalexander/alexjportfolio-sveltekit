@@ -1,4 +1,4 @@
-import { ColorCategorizedSkill, SkillCategoriesMap } from '../../types/skills';
+import type { ColorCategorizedSkill, SkillCategoriesMap } from '../../types/skills';
 
 type SkillColorLookup = Record<string, string>;
 

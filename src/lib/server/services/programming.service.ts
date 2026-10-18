@@ -1,5 +1,5 @@
-import { EndpointStatus } from '../../types/programming';
-import { ProgrammingProject, ProgrammingProjectDto } from '../../types/programming';
+import type { EndpointStatus } from '../../types/programming';
+import type { ProgrammingProject, ProgrammingProjectDto } from '../../types/programming';
 import { getProgrammingProjects, getProgrammingProjectSkills } from '../repos/programming.repo';
 import { getColorCategorizedSkills } from '../services/skills.service';
 
@@ -49,7 +49,7 @@ export async function getProgrammingProjectsWithSkills(): Promise<ProgrammingPro
 
 	return projects.map((project) => ({
 		...project,
-		skills: programmingSkills.filter((el) => (el.project === project.id)).map((el) => el.skill)
+		skills: programmingSkills.filter((el) => el.project === project.id).map((el) => el.skill)
 	}));
 }
 

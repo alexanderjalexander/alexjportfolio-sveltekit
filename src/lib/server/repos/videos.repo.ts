@@ -1,6 +1,6 @@
 import { db } from '../db';
 import { creators, videos } from '../db/migrations/schema';
-import { CommissionVideoRow, VideoWithDate } from '../../types/videos';
+import type { CommissionVideoRow, VideoWithDate } from '../../types/videos';
 
 import { eq, isNull } from 'drizzle-orm';
 

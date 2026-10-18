@@ -1,4 +1,4 @@
-import { SkillCategoriesMap, ColorCategorizedSkill } from '../../types/skills';
+import type { SkillCategoriesMap, ColorCategorizedSkill } from '../../types/skills';
 import { getSkillsCategories } from '../repos/skills.repo';
 import { SKILLS_COLORS } from '../../config/theme';
 

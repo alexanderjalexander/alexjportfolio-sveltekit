@@ -1,4 +1,4 @@
-import { YouTubeThumbnailSet, YouTubeVideoStats } from '../../types/videos';
+import type { YouTubeThumbnailSet, YouTubeVideoStats } from '../../types/videos';
 
 export function getVideoURL(id: string): string {
 	return `https://www.youtube.com/watch?v=${id}`;
