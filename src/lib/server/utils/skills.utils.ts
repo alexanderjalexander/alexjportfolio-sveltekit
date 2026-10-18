@@ -3,23 +3,23 @@ import type { ColorCategorizedSkill, SkillCategoriesMap } from '../../types/skil
 type SkillColorLookup = Record<string, string>;
 
 export function buildSkillColorMap(skills: ColorCategorizedSkill[]): SkillColorLookup {
-	const lookup: SkillColorLookup = {};
+  const lookup: SkillColorLookup = {};
 
-	for (const { skill, color } of skills) {
-		lookup[skill] = color;
-	}
+  for (const { skill, color } of skills) {
+    lookup[skill] = color;
+  }
 
-	return lookup;
+  return lookup;
 }
 
 export function buildSkillColorMapFromCategories(categories: SkillCategoriesMap): SkillColorLookup {
-	const lookup: SkillColorLookup = {};
+  const lookup: SkillColorLookup = {};
 
-	for (const category of Object.values(categories)) {
-		for (const skill of category.skills) {
-			lookup[skill] = category.color;
-		}
-	}
+  for (const category of Object.values(categories)) {
+    for (const skill of category.skills) {
+      lookup[skill] = category.color;
+    }
+  }
 
-	return lookup;
+  return lookup;
 }

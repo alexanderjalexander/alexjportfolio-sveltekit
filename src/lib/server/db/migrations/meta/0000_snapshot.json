@@ -1,678 +1,678 @@
 {
-	"id": "00000000-0000-0000-0000-000000000000",
-	"prevId": "",
-	"version": "7",
-	"dialect": "postgresql",
-	"tables": {
-		"public.categories": {
-			"name": "categories",
-			"schema": "",
-			"columns": {
-				"id": {
-					"name": "id",
-					"type": "integer",
-					"primaryKey": false,
-					"notNull": true,
-					"identity": {
-						"type": "byDefault",
-						"name": "categories_id_seq",
-						"increment": "1",
-						"minValue": "1",
-						"maxValue": "2147483647",
-						"startWith": "1",
-						"cache": "1",
-						"cycle": false,
-						"schema": "public"
-					}
-				},
-				"category": {
-					"name": "category",
-					"type": "varchar(35)",
-					"primaryKey": false,
-					"notNull": true
-				}
-			},
-			"indexes": {},
-			"foreignKeys": {},
-			"compositePrimaryKeys": {},
-			"uniqueConstraints": {},
-			"checkConstraints": {},
-			"policies": {},
-			"isRLSEnabled": false
-		},
-		"public.skill_category": {
-			"name": "skill_category",
-			"schema": "",
-			"columns": {
-				"category": {
-					"name": "category",
-					"type": "integer",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"skill": {
-					"name": "skill",
-					"type": "integer",
-					"primaryKey": false,
-					"notNull": true
-				}
-			},
-			"indexes": {},
-			"foreignKeys": {
-				"skill_category_category_fkey": {
-					"name": "skill_category_category_fkey",
-					"tableFrom": "skill_category",
-					"tableTo": "categories",
-					"schemaTo": "public",
-					"columnsFrom": ["category"],
-					"columnsTo": ["id"],
-					"onDelete": "no action",
-					"onUpdate": "no action"
-				},
-				"skill_category_skill_fkey": {
-					"name": "skill_category_skill_fkey",
-					"tableFrom": "skill_category",
-					"tableTo": "skills",
-					"schemaTo": "public",
-					"columnsFrom": ["skill"],
-					"columnsTo": ["id"],
-					"onDelete": "no action",
-					"onUpdate": "no action"
-				}
-			},
-			"compositePrimaryKeys": {},
-			"uniqueConstraints": {},
-			"checkConstraints": {},
-			"policies": {},
-			"isRLSEnabled": false
-		},
-		"public.skills": {
-			"name": "skills",
-			"schema": "",
-			"columns": {
-				"id": {
-					"name": "id",
-					"type": "integer",
-					"primaryKey": false,
-					"notNull": true,
-					"identity": {
-						"type": "byDefault",
-						"name": "skills_id_seq",
-						"increment": "1",
-						"minValue": "1",
-						"maxValue": "2147483647",
-						"startWith": "1",
-						"cache": "1",
-						"cycle": false,
-						"schema": "public"
-					}
-				},
-				"skill": {
-					"name": "skill",
-					"type": "varchar(35)",
-					"primaryKey": false,
-					"notNull": true
-				}
-			},
-			"indexes": {},
-			"foreignKeys": {},
-			"compositePrimaryKeys": {},
-			"uniqueConstraints": {},
-			"checkConstraints": {},
-			"policies": {},
-			"isRLSEnabled": false
-		},
-		"public.work_experience_jobs": {
-			"name": "work_experience_jobs",
-			"schema": "",
-			"columns": {
-				"id": {
-					"name": "id",
-					"type": "integer",
-					"primaryKey": false,
-					"notNull": true,
-					"identity": {
-						"type": "byDefault",
-						"name": "work_experience_jobs_id_seq",
-						"increment": "1",
-						"minValue": "1",
-						"maxValue": "2147483647",
-						"startWith": "1",
-						"cache": "1",
-						"cycle": false,
-						"schema": "public"
-					}
-				},
-				"job_title": {
-					"name": "job_title",
-					"type": "varchar(50)",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"job_start_date": {
-					"name": "job_start_date",
-					"type": "date",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"job_end_date": {
-					"name": "job_end_date",
-					"type": "date",
-					"primaryKey": false,
-					"notNull": false
-				},
-				"job_company": {
-					"name": "job_company",
-					"type": "varchar(75)",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"job_location": {
-					"name": "job_location",
-					"type": "varchar(75)",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"responsibilities": {
-					"name": "responsibilities",
-					"type": "varchar(1000)",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"company_picture_key": {
-					"name": "company_picture_key",
-					"type": "varchar(50)",
-					"primaryKey": false,
-					"notNull": false
-				}
-			},
-			"indexes": {},
-			"foreignKeys": {},
-			"compositePrimaryKeys": {},
-			"uniqueConstraints": {},
-			"checkConstraints": {},
-			"policies": {},
-			"isRLSEnabled": false
-		},
-		"public.work_experience_skills": {
-			"name": "work_experience_skills",
-			"schema": "",
-			"columns": {
-				"job": {
-					"name": "job",
-					"type": "integer",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"skill": {
-					"name": "skill",
-					"type": "integer",
-					"primaryKey": false,
-					"notNull": true
-				}
-			},
-			"indexes": {},
-			"foreignKeys": {
-				"work_experience_skills_job_fkey": {
-					"name": "work_experience_skills_job_fkey",
-					"tableFrom": "work_experience_skills",
-					"tableTo": "work_experience_jobs",
-					"schemaTo": "public",
-					"columnsFrom": ["job"],
-					"columnsTo": ["id"],
-					"onDelete": "no action",
-					"onUpdate": "no action"
-				},
-				"work_experience_skills_skill_fkey": {
-					"name": "work_experience_skills_skill_fkey",
-					"tableFrom": "work_experience_skills",
-					"tableTo": "skills",
-					"schemaTo": "public",
-					"columnsFrom": ["skill"],
-					"columnsTo": ["id"],
-					"onDelete": "no action",
-					"onUpdate": "no action"
-				}
-			},
-			"compositePrimaryKeys": {},
-			"uniqueConstraints": {},
-			"checkConstraints": {},
-			"policies": {},
-			"isRLSEnabled": false
-		},
-		"public.programming_projects": {
-			"name": "programming_projects",
-			"schema": "",
-			"columns": {
-				"id": {
-					"name": "id",
-					"type": "integer",
-					"primaryKey": false,
-					"notNull": true,
-					"identity": {
-						"type": "byDefault",
-						"name": "programming_projects_id_seq",
-						"increment": "1",
-						"minValue": "1",
-						"maxValue": "2147483647",
-						"startWith": "1",
-						"cache": "1",
-						"cycle": false,
-						"schema": "public"
-					}
-				},
-				"title": {
-					"name": "title",
-					"type": "varchar(50)",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"subtitle": {
-					"name": "subtitle",
-					"type": "varchar(100)",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"description": {
-					"name": "description",
-					"type": "varchar(500)",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"repo_link": {
-					"name": "repo_link",
-					"type": "varchar(75)",
-					"primaryKey": false,
-					"notNull": false
-				},
-				"live_link": {
-					"name": "live_link",
-					"type": "varchar(75)",
-					"primaryKey": false,
-					"notNull": false
-				}
-			},
-			"indexes": {},
-			"foreignKeys": {},
-			"compositePrimaryKeys": {},
-			"uniqueConstraints": {},
-			"checkConstraints": {},
-			"policies": {},
-			"isRLSEnabled": false
-		},
-		"public.programming_skills": {
-			"name": "programming_skills",
-			"schema": "",
-			"columns": {
-				"project": {
-					"name": "project",
-					"type": "integer",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"skill": {
-					"name": "skill",
-					"type": "integer",
-					"primaryKey": false,
-					"notNull": true
-				}
-			},
-			"indexes": {},
-			"foreignKeys": {
-				"programming_skills_project_fkey": {
-					"name": "programming_skills_project_fkey",
-					"tableFrom": "programming_skills",
-					"tableTo": "programming_projects",
-					"schemaTo": "public",
-					"columnsFrom": ["project"],
-					"columnsTo": ["id"],
-					"onDelete": "no action",
-					"onUpdate": "no action"
-				},
-				"programming_skills_skill_fkey": {
-					"name": "programming_skills_skill_fkey",
-					"tableFrom": "programming_skills",
-					"tableTo": "skills",
-					"schemaTo": "public",
-					"columnsFrom": ["skill"],
-					"columnsTo": ["id"],
-					"onDelete": "no action",
-					"onUpdate": "no action"
-				}
-			},
-			"compositePrimaryKeys": {},
-			"uniqueConstraints": {},
-			"checkConstraints": {},
-			"policies": {},
-			"isRLSEnabled": false
-		},
-		"public.creators": {
-			"name": "creators",
-			"schema": "",
-			"columns": {
-				"id": {
-					"name": "id",
-					"type": "integer",
-					"primaryKey": false,
-					"notNull": true,
-					"identity": {
-						"type": "byDefault",
-						"name": "creators_id_seq",
-						"increment": "1",
-						"minValue": "1",
-						"maxValue": "2147483647",
-						"startWith": "1",
-						"cache": "1",
-						"cycle": false,
-						"schema": "public"
-					}
-				},
-				"name": {
-					"name": "name",
-					"type": "varchar(30)",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"channel_id": {
-					"name": "channel_id",
-					"type": "varchar(50)",
-					"primaryKey": false,
-					"notNull": true
-				}
-			},
-			"indexes": {},
-			"foreignKeys": {},
-			"compositePrimaryKeys": {},
-			"uniqueConstraints": {},
-			"checkConstraints": {},
-			"policies": {},
-			"isRLSEnabled": false
-		},
-		"public.videos": {
-			"name": "videos",
-			"schema": "",
-			"columns": {
-				"id": {
-					"name": "id",
-					"type": "integer",
-					"primaryKey": false,
-					"notNull": true,
-					"identity": {
-						"type": "byDefault",
-						"name": "videos_id_seq",
-						"increment": "1",
-						"minValue": "1",
-						"maxValue": "2147483647",
-						"startWith": "1",
-						"cache": "1",
-						"cycle": false,
-						"schema": "public"
-					}
-				},
-				"name": {
-					"name": "name",
-					"type": "varchar(30)",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"youtube_id": {
-					"name": "youtube_id",
-					"type": "varchar(11)",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"publish_date": {
-					"name": "publish_date",
-					"type": "date",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"is_short": {
-					"name": "is_short",
-					"type": "boolean",
-					"primaryKey": false,
-					"notNull": true,
-					"default": false
-				},
-				"commission_for": {
-					"name": "commission_for",
-					"type": "integer",
-					"primaryKey": false,
-					"notNull": false
-				}
-			},
-			"indexes": {},
-			"foreignKeys": {
-				"videos_commission_for_fkey": {
-					"name": "videos_commission_for_fkey",
-					"tableFrom": "videos",
-					"tableTo": "creators",
-					"schemaTo": "public",
-					"columnsFrom": ["commission_for"],
-					"columnsTo": ["id"],
-					"onDelete": "no action",
-					"onUpdate": "no action"
-				}
-			},
-			"compositePrimaryKeys": {},
-			"uniqueConstraints": {},
-			"checkConstraints": {},
-			"policies": {},
-			"isRLSEnabled": false
-		},
-		"public.motion_graphics_projects": {
-			"name": "motion_graphics_projects",
-			"schema": "",
-			"columns": {
-				"id": {
-					"name": "id",
-					"type": "integer",
-					"primaryKey": false,
-					"notNull": true,
-					"identity": {
-						"type": "byDefault",
-						"name": "motion_graphics_projects_id_seq",
-						"increment": "1",
-						"minValue": "1",
-						"maxValue": "2147483647",
-						"startWith": "1",
-						"cache": "1",
-						"cycle": false,
-						"schema": "public"
-					}
-				},
-				"name": {
-					"name": "name",
-					"type": "varchar(30)",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"description": {
-					"name": "description",
-					"type": "varchar(300)",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"youtube_id": {
-					"name": "youtube_id",
-					"type": "varchar(11)",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"publish_date": {
-					"name": "publish_date",
-					"type": "date",
-					"primaryKey": false,
-					"notNull": true
-				}
-			},
-			"indexes": {},
-			"foreignKeys": {},
-			"compositePrimaryKeys": {},
-			"uniqueConstraints": {},
-			"checkConstraints": {},
-			"policies": {},
-			"isRLSEnabled": false
-		},
-		"public.motion_graphics_skills": {
-			"name": "motion_graphics_skills",
-			"schema": "",
-			"columns": {
-				"project": {
-					"name": "project",
-					"type": "integer",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"skill": {
-					"name": "skill",
-					"type": "integer",
-					"primaryKey": false,
-					"notNull": true
-				}
-			},
-			"indexes": {},
-			"foreignKeys": {
-				"motion_graphics_skills_project_fkey": {
-					"name": "motion_graphics_skills_project_fkey",
-					"tableFrom": "motion_graphics_skills",
-					"tableTo": "motion_graphics_projects",
-					"schemaTo": "public",
-					"columnsFrom": ["project"],
-					"columnsTo": ["id"],
-					"onDelete": "no action",
-					"onUpdate": "no action"
-				},
-				"motion_graphics_skills_skill_fkey": {
-					"name": "motion_graphics_skills_skill_fkey",
-					"tableFrom": "motion_graphics_skills",
-					"tableTo": "skills",
-					"schemaTo": "public",
-					"columnsFrom": ["skill"],
-					"columnsTo": ["id"],
-					"onDelete": "no action",
-					"onUpdate": "no action"
-				}
-			},
-			"compositePrimaryKeys": {},
-			"uniqueConstraints": {},
-			"checkConstraints": {},
-			"policies": {},
-			"isRLSEnabled": false
-		},
-		"public.animation_projects": {
-			"name": "animation_projects",
-			"schema": "",
-			"columns": {
-				"id": {
-					"name": "id",
-					"type": "integer",
-					"primaryKey": false,
-					"notNull": true,
-					"identity": {
-						"type": "byDefault",
-						"name": "animation_projects_id_seq",
-						"increment": "1",
-						"minValue": "1",
-						"maxValue": "2147483647",
-						"startWith": "1",
-						"cache": "1",
-						"cycle": false,
-						"schema": "public"
-					}
-				},
-				"name": {
-					"name": "name",
-					"type": "varchar(30)",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"description": {
-					"name": "description",
-					"type": "varchar(300)",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"youtube_id": {
-					"name": "youtube_id",
-					"type": "varchar(11)",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"publish_date": {
-					"name": "publish_date",
-					"type": "date",
-					"primaryKey": false,
-					"notNull": true
-				}
-			},
-			"indexes": {},
-			"foreignKeys": {},
-			"compositePrimaryKeys": {},
-			"uniqueConstraints": {},
-			"checkConstraints": {},
-			"policies": {},
-			"isRLSEnabled": false
-		},
-		"public.animation_skills": {
-			"name": "animation_skills",
-			"schema": "",
-			"columns": {
-				"project": {
-					"name": "project",
-					"type": "integer",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"skill": {
-					"name": "skill",
-					"type": "integer",
-					"primaryKey": false,
-					"notNull": true
-				}
-			},
-			"indexes": {},
-			"foreignKeys": {
-				"animation_skills_skill_fkey": {
-					"name": "animation_skills_skill_fkey",
-					"tableFrom": "animation_skills",
-					"tableTo": "skills",
-					"schemaTo": "public",
-					"columnsFrom": ["skill"],
-					"columnsTo": ["id"],
-					"onDelete": "no action",
-					"onUpdate": "no action"
-				},
-				"animation_skills_project_fkey": {
-					"name": "animation_skills_project_fkey",
-					"tableFrom": "animation_skills",
-					"tableTo": "motion_graphics_projects",
-					"schemaTo": "public",
-					"columnsFrom": ["project"],
-					"columnsTo": ["id"],
-					"onDelete": "no action",
-					"onUpdate": "no action"
-				}
-			},
-			"compositePrimaryKeys": {},
-			"uniqueConstraints": {},
-			"checkConstraints": {},
-			"policies": {},
-			"isRLSEnabled": false
-		}
-	},
-	"enums": {},
-	"schemas": {},
-	"sequences": {},
-	"roles": {},
-	"policies": {},
-	"views": {},
-	"_meta": {
-		"schemas": {},
-		"tables": {},
-		"columns": {}
-	},
-	"internal": {
-		"tables": {}
-	}
+  "id": "00000000-0000-0000-0000-000000000000",
+  "prevId": "",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.categories": {
+      "name": "categories",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "identity": {
+            "type": "byDefault",
+            "name": "categories_id_seq",
+            "increment": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "startWith": "1",
+            "cache": "1",
+            "cycle": false,
+            "schema": "public"
+          }
+        },
+        "category": {
+          "name": "category",
+          "type": "varchar(35)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.skill_category": {
+      "name": "skill_category",
+      "schema": "",
+      "columns": {
+        "category": {
+          "name": "category",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "skill": {
+          "name": "skill",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "skill_category_category_fkey": {
+          "name": "skill_category_category_fkey",
+          "tableFrom": "skill_category",
+          "tableTo": "categories",
+          "schemaTo": "public",
+          "columnsFrom": ["category"],
+          "columnsTo": ["id"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "skill_category_skill_fkey": {
+          "name": "skill_category_skill_fkey",
+          "tableFrom": "skill_category",
+          "tableTo": "skills",
+          "schemaTo": "public",
+          "columnsFrom": ["skill"],
+          "columnsTo": ["id"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.skills": {
+      "name": "skills",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "identity": {
+            "type": "byDefault",
+            "name": "skills_id_seq",
+            "increment": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "startWith": "1",
+            "cache": "1",
+            "cycle": false,
+            "schema": "public"
+          }
+        },
+        "skill": {
+          "name": "skill",
+          "type": "varchar(35)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.work_experience_jobs": {
+      "name": "work_experience_jobs",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "identity": {
+            "type": "byDefault",
+            "name": "work_experience_jobs_id_seq",
+            "increment": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "startWith": "1",
+            "cache": "1",
+            "cycle": false,
+            "schema": "public"
+          }
+        },
+        "job_title": {
+          "name": "job_title",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "job_start_date": {
+          "name": "job_start_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "job_end_date": {
+          "name": "job_end_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "job_company": {
+          "name": "job_company",
+          "type": "varchar(75)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "job_location": {
+          "name": "job_location",
+          "type": "varchar(75)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "responsibilities": {
+          "name": "responsibilities",
+          "type": "varchar(1000)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "company_picture_key": {
+          "name": "company_picture_key",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.work_experience_skills": {
+      "name": "work_experience_skills",
+      "schema": "",
+      "columns": {
+        "job": {
+          "name": "job",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "skill": {
+          "name": "skill",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "work_experience_skills_job_fkey": {
+          "name": "work_experience_skills_job_fkey",
+          "tableFrom": "work_experience_skills",
+          "tableTo": "work_experience_jobs",
+          "schemaTo": "public",
+          "columnsFrom": ["job"],
+          "columnsTo": ["id"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "work_experience_skills_skill_fkey": {
+          "name": "work_experience_skills_skill_fkey",
+          "tableFrom": "work_experience_skills",
+          "tableTo": "skills",
+          "schemaTo": "public",
+          "columnsFrom": ["skill"],
+          "columnsTo": ["id"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.programming_projects": {
+      "name": "programming_projects",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "identity": {
+            "type": "byDefault",
+            "name": "programming_projects_id_seq",
+            "increment": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "startWith": "1",
+            "cache": "1",
+            "cycle": false,
+            "schema": "public"
+          }
+        },
+        "title": {
+          "name": "title",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "subtitle": {
+          "name": "subtitle",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "name": "description",
+          "type": "varchar(500)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "repo_link": {
+          "name": "repo_link",
+          "type": "varchar(75)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "live_link": {
+          "name": "live_link",
+          "type": "varchar(75)",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.programming_skills": {
+      "name": "programming_skills",
+      "schema": "",
+      "columns": {
+        "project": {
+          "name": "project",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "skill": {
+          "name": "skill",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "programming_skills_project_fkey": {
+          "name": "programming_skills_project_fkey",
+          "tableFrom": "programming_skills",
+          "tableTo": "programming_projects",
+          "schemaTo": "public",
+          "columnsFrom": ["project"],
+          "columnsTo": ["id"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "programming_skills_skill_fkey": {
+          "name": "programming_skills_skill_fkey",
+          "tableFrom": "programming_skills",
+          "tableTo": "skills",
+          "schemaTo": "public",
+          "columnsFrom": ["skill"],
+          "columnsTo": ["id"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.creators": {
+      "name": "creators",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "identity": {
+            "type": "byDefault",
+            "name": "creators_id_seq",
+            "increment": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "startWith": "1",
+            "cache": "1",
+            "cycle": false,
+            "schema": "public"
+          }
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(30)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "channel_id": {
+          "name": "channel_id",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.videos": {
+      "name": "videos",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "identity": {
+            "type": "byDefault",
+            "name": "videos_id_seq",
+            "increment": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "startWith": "1",
+            "cache": "1",
+            "cycle": false,
+            "schema": "public"
+          }
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(30)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "youtube_id": {
+          "name": "youtube_id",
+          "type": "varchar(11)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "publish_date": {
+          "name": "publish_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "is_short": {
+          "name": "is_short",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "commission_for": {
+          "name": "commission_for",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "videos_commission_for_fkey": {
+          "name": "videos_commission_for_fkey",
+          "tableFrom": "videos",
+          "tableTo": "creators",
+          "schemaTo": "public",
+          "columnsFrom": ["commission_for"],
+          "columnsTo": ["id"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.motion_graphics_projects": {
+      "name": "motion_graphics_projects",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "identity": {
+            "type": "byDefault",
+            "name": "motion_graphics_projects_id_seq",
+            "increment": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "startWith": "1",
+            "cache": "1",
+            "cycle": false,
+            "schema": "public"
+          }
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(30)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "name": "description",
+          "type": "varchar(300)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "youtube_id": {
+          "name": "youtube_id",
+          "type": "varchar(11)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "publish_date": {
+          "name": "publish_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.motion_graphics_skills": {
+      "name": "motion_graphics_skills",
+      "schema": "",
+      "columns": {
+        "project": {
+          "name": "project",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "skill": {
+          "name": "skill",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "motion_graphics_skills_project_fkey": {
+          "name": "motion_graphics_skills_project_fkey",
+          "tableFrom": "motion_graphics_skills",
+          "tableTo": "motion_graphics_projects",
+          "schemaTo": "public",
+          "columnsFrom": ["project"],
+          "columnsTo": ["id"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "motion_graphics_skills_skill_fkey": {
+          "name": "motion_graphics_skills_skill_fkey",
+          "tableFrom": "motion_graphics_skills",
+          "tableTo": "skills",
+          "schemaTo": "public",
+          "columnsFrom": ["skill"],
+          "columnsTo": ["id"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.animation_projects": {
+      "name": "animation_projects",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "identity": {
+            "type": "byDefault",
+            "name": "animation_projects_id_seq",
+            "increment": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "startWith": "1",
+            "cache": "1",
+            "cycle": false,
+            "schema": "public"
+          }
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(30)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "name": "description",
+          "type": "varchar(300)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "youtube_id": {
+          "name": "youtube_id",
+          "type": "varchar(11)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "publish_date": {
+          "name": "publish_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.animation_skills": {
+      "name": "animation_skills",
+      "schema": "",
+      "columns": {
+        "project": {
+          "name": "project",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "skill": {
+          "name": "skill",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "animation_skills_skill_fkey": {
+          "name": "animation_skills_skill_fkey",
+          "tableFrom": "animation_skills",
+          "tableTo": "skills",
+          "schemaTo": "public",
+          "columnsFrom": ["skill"],
+          "columnsTo": ["id"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "animation_skills_project_fkey": {
+          "name": "animation_skills_project_fkey",
+          "tableFrom": "animation_skills",
+          "tableTo": "motion_graphics_projects",
+          "schemaTo": "public",
+          "columnsFrom": ["project"],
+          "columnsTo": ["id"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  },
+  "internal": {
+    "tables": {}
+  }
 }
