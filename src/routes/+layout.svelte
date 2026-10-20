@@ -7,6 +7,11 @@
   import Footer from '#lib/components/layout/Footer.svelte';
 
   let { children }: LayoutProps = $props();
+
+  import { config } from '@fortawesome/fontawesome-svg-core';
+  import '@fortawesome/fontawesome-svg-core/styles.css';
+
+  config.autoAddCss = false;
 </script>
 
 <svelte:head>
