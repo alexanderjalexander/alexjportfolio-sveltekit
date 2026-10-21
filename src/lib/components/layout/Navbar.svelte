@@ -35,7 +35,9 @@
   <div class="navbar_container">
     <a href="/" class="logo" aria-label="Home"> AJ </a>
     {#if !isMobile.current}
-      <ul transition:fly={{ y: -50, duration: EASE_MS, easing: backOut }}>
+      <ul
+        transition:slide={{ axis: 'x', duration: EASE_MS, easing: backOut }}
+      >
         {#each navItems as { href, label } (href)}
           {@const isActive = page.url.pathname === href}
           <li>

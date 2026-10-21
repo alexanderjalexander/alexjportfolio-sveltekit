@@ -32,7 +32,7 @@
     box-sizing: border-box;
 
     span {
-      width: 1.5rem;
+      width: 100%;
       height: 0.25rem;
 
       position: relative;
