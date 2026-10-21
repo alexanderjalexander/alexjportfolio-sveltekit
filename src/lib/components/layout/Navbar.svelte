@@ -6,13 +6,14 @@
   import { page } from '$app/state';
   import { MediaQuery } from 'svelte/reactivity';
   import { backOut } from 'svelte/easing';
-  import { scale, fly, slide } from 'svelte/transition';
+  import { scale, slide } from 'svelte/transition';
   import { prefersReducedMotion } from 'svelte/motion';
 
   import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
   import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons';
   import { faFileLines } from '@fortawesome/free-solid-svg-icons';
   import Hamburger from '../shared/Hamburger.svelte';
+  import { onMount } from 'svelte';
 
   const EASE_MS = !prefersReducedMotion.current ? 500 : 0;
 
@@ -27,14 +28,32 @@
 
   const extLinksKeys = Object.keys(extLinks) as (keyof typeof extLinks)[];
 
+  const maxWidth = 960;
   let hamburgerOpen = $state(false);
-  const isMobile = new MediaQuery('max-width: 960px');
+  let isMobile = $state(false);
+
+  onMount(() => {
+    const mediaQuery = window.matchMedia(`(max-width: ${maxWidth}px)`);
+
+    isMobile = mediaQuery.matches;
+
+    const responsiveWidthHandler = (widthEvent: MediaQueryListEvent) => {
+      isMobile = widthEvent.matches;
+      if (hamburgerOpen && !isMobile)
+      {
+        hamburgerOpen = isMobile;
+      }
+    };
+
+    mediaQuery.addEventListener('change', responsiveWidthHandler);
+    return () => mediaQuery.removeEventListener('change', responsiveWidthHandler);
+  })
 </script>
 
 <nav class="navbar">
   <div class="navbar_container">
     <a href="/" class="logo" aria-label="Home"> AJ </a>
-    {#if !isMobile.current}
+    {#if !isMobile}
       <ul
         transition:slide={{ axis: 'x', duration: EASE_MS, easing: backOut }}
       >
@@ -78,7 +97,7 @@
         </li>
       {/each}
       <!-- TODO: HAMBURGER ICON AND SUCH, ACTUAL BUTTON ELEMENT -->
-      {#if isMobile.current}
+      {#if isMobile}
         <li
           transition:slide={{ axis: 'x', duration: EASE_MS, easing: backOut }}
         >
