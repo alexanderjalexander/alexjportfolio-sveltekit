@@ -1,5 +1,5 @@
 <script>
-  import Hero from '#lib/components/shared/Hero.svelte';
+  import Hero from '#lib/components/layout/Hero.svelte';
 </script>
 
 <Hero />

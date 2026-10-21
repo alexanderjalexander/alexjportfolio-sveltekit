@@ -11,6 +11,7 @@
   import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
   import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons';
   import { faFileLines } from '@fortawesome/free-solid-svg-icons';
+  import Hamburger from '../shared/Hamburger.svelte';
 
   const EASE_MS = !prefersReducedMotion.current ? 500 : 0;
 
@@ -25,7 +26,8 @@
 
   const extLinksKeys = Object.keys(extLinks) as (keyof typeof extLinks)[];
 
-  // TODO:
+  // TODO: Hamburger state
+  let hamburgerOpen = $state(false);
 </script>
 
 <nav class="navbar">
@@ -71,6 +73,11 @@
         </li>
       {/each}
       <!-- TODO: HAMBURGER ICON AND SUCH, ACTUAL BUTTON ELEMENT -->
+      <li>
+        <Hamburger
+          bind:isOpen={hamburgerOpen}
+          label='Toggle Navigation Menu'/>
+      </li>
     </ul>
   </div>
   <!-- TODO: MOBILE STUFF -->
@@ -130,38 +137,45 @@
     background-color: var(--color-accent);
   }
 
+  .navbar ul {
+    align-items: center;
+  }
+
   .navbar ul li {
     position: relative;
     inset: 0;
-  }
-
-  .navbar ul li a {
-    display: block;
-    position: relative;
 
     padding: 4px 8px;
-    border-radius: 8px;
+  }
 
-    font-family: var(--font-display);
-    font-variation-settings:
-      'wdth' 95,
-      'opsz' 50;
-    text-transform: uppercase;
+  .navbar ul li {
+    a {
+      display: block;
+      position: relative;
 
-    z-index: 10;
+      border-radius: 8px;
 
-    transition: all 0.5s cubic-bezier(0.42, 0.27, 0.07, 1);
-
-    @media (prefers-reduced-motion: reduce) {
-      transition: all 0s ease-in-out;
-    }
-
-    &[aria-current='page'] {
-      font-weight: 800;
+      font-family: var(--font-display);
       font-variation-settings:
-        'wdth' 100,
-        'opsz' 0;
-      color: var(--color-base);
+        'wdth' 95,
+        'opsz' 50;
+      text-transform: uppercase;
+
+      z-index: 10;
+
+      transition: all 0.5s cubic-bezier(0.42, 0.27, 0.07, 1);
+
+      @media (prefers-reduced-motion: reduce) {
+        transition: all 0s ease-in-out;
+      }
+
+      &[aria-current='page'] {
+        font-weight: 800;
+        font-variation-settings:
+          'wdth' 100,
+          'opsz' 0;
+        color: var(--color-base);
+      }
     }
   }
 </style>
