@@ -4,8 +4,9 @@
   import type { ExtLink } from '../../config/site';
 
   import { page } from '$app/state';
+  import { MediaQuery } from 'svelte/reactivity';
   import { backOut } from 'svelte/easing';
-  import { scale } from 'svelte/transition';
+  import { scale, fly, slide } from 'svelte/transition';
   import { prefersReducedMotion } from 'svelte/motion';
 
   import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
@@ -26,27 +27,29 @@
 
   const extLinksKeys = Object.keys(extLinks) as (keyof typeof extLinks)[];
 
-  // TODO: Hamburger state
   let hamburgerOpen = $state(false);
+  const isMobile = new MediaQuery('max-width: 960px');
 </script>
 
 <nav class="navbar">
   <div class="navbar_container">
     <a href="/" class="logo" aria-label="Home"> AJ </a>
-    <ul>
-      {#each navItems as { href, label } (href)}
-        {@const isActive = page.url.pathname === href}
-        <li>
-          {#if isActive}
-            <div
-              class="selected_link"
-              transition:scale={{ duration: EASE_MS, easing: backOut }}
-            ></div>
-          {/if}
-          <a {href} aria-current={isActive ? 'page' : undefined}>{label}</a>
-        </li>
-      {/each}
-    </ul>
+    {#if !isMobile.current}
+      <ul transition:fly={{ y: -50, duration: EASE_MS, easing: backOut }}>
+        {#each navItems as { href, label } (href)}
+          {@const isActive = page.url.pathname === href}
+          <li>
+            {#if isActive}
+              <div
+                class="selected_link"
+                transition:scale={{ duration: EASE_MS, easing: backOut }}
+              ></div>
+            {/if}
+            <a {href} aria-current={isActive ? 'page' : undefined}>{label}</a>
+          </li>
+        {/each}
+      </ul>
+    {/if}
     <ul>
       {#each extLinksKeys as key (key)}
         {@const link: ExtLink = extLinks[key]}
@@ -73,11 +76,15 @@
         </li>
       {/each}
       <!-- TODO: HAMBURGER ICON AND SUCH, ACTUAL BUTTON ELEMENT -->
-      <li>
-        <Hamburger
-          bind:isOpen={hamburgerOpen}
-          label='Toggle Navigation Menu'/>
-      </li>
+      {#if isMobile.current}
+        <li
+          transition:slide={{ axis: 'x', duration: EASE_MS, easing: backOut }}
+        >
+          <Hamburger
+            bind:isOpen={hamburgerOpen}
+            label='Toggle Navigation Menu'/>
+        </li>
+      {/if}
     </ul>
   </div>
   <!-- TODO: MOBILE STUFF -->
@@ -87,8 +94,8 @@
   .navbar {
     position: fixed;
     top: 0;
-
-    width: 100dvw;
+    left: 0;
+    right: 0;
 
     background: color-mix(in srgb, var(--color-surface), transparent 50%);
     border-bottom: 2px solid var(--color-secondary);
@@ -141,6 +148,14 @@
     align-items: center;
   }
 
+  .navbar ul:first-of-type {
+    flex-shrink: 1;
+  }
+
+  .navbar ul:last-of-type {
+    flex-shrink: 0;
+  }
+
   .navbar ul li {
     position: relative;
     inset: 0;
@@ -160,6 +175,7 @@
         'wdth' 95,
         'opsz' 50;
       text-transform: uppercase;
+      text-wrap: nowrap;
 
       z-index: 10;
 
