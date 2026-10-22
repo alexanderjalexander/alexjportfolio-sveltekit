@@ -4,7 +4,6 @@
   import type { ExtLink } from '../../config/site';
 
   import { page } from '$app/state';
-  import { MediaQuery } from 'svelte/reactivity';
   import { backOut } from 'svelte/easing';
   import { scale, slide } from 'svelte/transition';
   import { prefersReducedMotion } from 'svelte/motion';
@@ -14,6 +13,7 @@
   import { faFileLines } from '@fortawesome/free-solid-svg-icons';
   import Hamburger from '../shared/Hamburger.svelte';
   import { onMount } from 'svelte';
+  import { afterNavigate } from '$app/navigation';
 
   const EASE_MS = !prefersReducedMotion.current ? 500 : 0;
 
@@ -29,7 +29,7 @@
   const extLinksKeys = Object.keys(extLinks) as (keyof typeof extLinks)[];
 
   const maxWidth = 960;
-  let hamburgerOpen = $state(false);
+  let hamburgerMenuOpen = $state(false);
   let isMobile = $state(false);
 
   onMount(() => {
@@ -39,22 +39,28 @@
 
     const responsiveWidthHandler = (widthEvent: MediaQueryListEvent) => {
       isMobile = widthEvent.matches;
-      if (hamburgerOpen && !isMobile)
+      if (hamburgerMenuOpen && !isMobile)
       {
-        hamburgerOpen = isMobile;
+        hamburgerMenuOpen = isMobile;
       }
     };
 
     mediaQuery.addEventListener('change', responsiveWidthHandler);
     return () => mediaQuery.removeEventListener('change', responsiveWidthHandler);
-  })
+  });
+
+  afterNavigate(() => {
+    hamburgerMenuOpen = false;
+  });
 </script>
 
-<nav class="navbar">
-  <div class="navbar_container">
+<nav class="navbar_container">
+  <div class="top_navbar">
+  <div class="top_navbar_container">
     <a href="/" class="logo" aria-label="Home"> AJ </a>
     {#if !isMobile}
       <ul
+        class="navbar_center_links"
         transition:slide={{ axis: 'x', duration: EASE_MS, easing: backOut }}
       >
         {#each navItems as { href, label } (href)}
@@ -71,7 +77,7 @@
         {/each}
       </ul>
     {/if}
-    <ul>
+    <ul class="navbar_side_buttons">
       {#each extLinksKeys as key (key)}
         {@const link: ExtLink = extLinks[key]}
         {@const isActive = page.url.pathname === link.href}
@@ -96,45 +102,64 @@
           </a>
         </li>
       {/each}
-      <!-- TODO: HAMBURGER ICON AND SUCH, ACTUAL BUTTON ELEMENT -->
       {#if isMobile}
         <li
           transition:slide={{ axis: 'x', duration: EASE_MS, easing: backOut }}
         >
           <Hamburger
-            bind:isOpen={hamburgerOpen}
+            bind:isOpen={hamburgerMenuOpen}
             label='Toggle Navigation Menu'/>
         </li>
       {/if}
     </ul>
   </div>
+  </div>
   <!-- TODO: MOBILE STUFF -->
+  {#if isMobile && hamburgerMenuOpen}
+    <div class="mobile_menu">
+      <ul
+        class="navbar_mobile_menu_links"
+      >
+        {#each navItems as { href, label } (href)}
+          <li>
+            <a {href}>{label}</a>
+          </li>
+        {/each}
+      </ul>
+    </div>
+  {/if}
 </nav>
 
 <style>
-  .navbar {
+  .navbar_container {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
 
-    background: color-mix(in srgb, var(--color-surface), transparent 50%);
-    border-bottom: 2px solid var(--color-secondary);
-
     font-size: 1.2rem;
-
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
 
     z-index: 5;
   }
 
-  .navbar_container {
+  .top_navbar {
+    position: relative;
     width: 100%;
-    max-width: 1280px;
 
+    background: color-mix(in srgb, var(--color-surface), transparent 50%);
+    border-bottom: 2px solid var(--color-secondary);
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    z-index: 10;
+  }
+
+  .top_navbar_container  {
+    max-width: 1280px;
     margin: auto;
     padding: 0.5rem 1rem;
+    height: 4rem;
 
     display: flex;
     align-items: center;
@@ -145,11 +170,6 @@
     font-family: var(--font-display);
     font-size: 1.75rem;
     font-weight: 700;
-  }
-  ul {
-    display: flex;
-    gap: 4px;
-    list-style: none;
   }
 
   div.selected_link {
@@ -165,54 +185,71 @@
     background-color: var(--color-accent);
   }
 
-  .navbar ul {
+  .top_navbar ul {
+    display: flex;
+    gap: 8px;
     align-items: center;
-  }
 
-  .navbar ul:first-of-type {
-    flex-shrink: 1;
-  }
+    list-style: none;
 
-  .navbar ul:last-of-type {
-    flex-shrink: 0;
-  }
+    &:first-of-type {
+      flex-shrink: 1;
+    }
 
-  .navbar ul li {
-    position: relative;
-    inset: 0;
+    &:last-of-type {
+      flex-shrink: 0;
+    }
 
-    padding: 4px 8px;
-  }
-
-  .navbar ul li {
-    a {
-      display: block;
+    li {
       position: relative;
+      inset: 0;
 
-      border-radius: 8px;
+      padding: 2px;
+    }
+  }
 
-      font-family: var(--font-display);
+  .top_navbar ul li a {
+    display: block;
+    position: relative;
+
+    border-radius: 8px;
+
+    font-family: var(--font-display);
+    font-variation-settings: 'wdth' 95, 'opsz' 50;
+    text-transform: uppercase;
+    text-wrap: nowrap;
+
+    z-index: 10;
+
+    transition: all 0.5s cubic-bezier(0.42, 0.27, 0.07, 1);
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: all 0s ease-in-out;
+    }
+
+    &[aria-current='page'] {
+      font-weight: 800;
       font-variation-settings:
-        'wdth' 95,
-        'opsz' 50;
-      text-transform: uppercase;
-      text-wrap: nowrap;
+        'wdth' 100,
+        'opsz' 0;
+      color: var(--color-base);
+    }
+  }
 
-      z-index: 10;
+  .navbar_center_links {
+    font-size: 1rem;
+  }
 
-      transition: all 0.5s cubic-bezier(0.42, 0.27, 0.07, 1);
+  .navbar_side_buttons {
+    font-size: 1.5rem;
+  }
 
-      @media (prefers-reduced-motion: reduce) {
-        transition: all 0s ease-in-out;
-      }
+  .mobile_menu {
+    width: 100%;
+    height: 100lvh;
 
-      &[aria-current='page'] {
-        font-weight: 800;
-        font-variation-settings:
-          'wdth' 100,
-          'opsz' 0;
-        color: var(--color-base);
-      }
+    .navbar_mobile_menu_links {
+
     }
   }
 </style>
