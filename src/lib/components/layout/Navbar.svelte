@@ -190,7 +190,7 @@
       }
 
       &.navbar_side_buttons li {
-        padding: 0px 4px;
+        padding: 4px;
       }
     }
   }
