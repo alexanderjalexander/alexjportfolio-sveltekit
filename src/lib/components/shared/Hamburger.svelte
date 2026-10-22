@@ -25,6 +25,8 @@
     justify-content: space-around;
     align-content: center;
 
+    margin-left: 0.5rem;
+
     width: 1.5rem;
     height: 1.5rem;
 

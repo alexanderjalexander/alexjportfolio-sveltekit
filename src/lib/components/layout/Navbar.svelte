@@ -28,7 +28,7 @@
 
   const extLinksKeys = Object.keys(extLinks) as (keyof typeof extLinks)[];
 
-  const maxWidth = 960;
+  const maxWidth = 860;
   let hamburgerMenuOpen = $state(false);
   let isMobile = $state(false);
 
@@ -153,6 +153,35 @@
     -webkit-backdrop-filter: blur(10px);
 
     z-index: 10;
+
+    ul {
+      display: flex;
+      gap: 0px;
+      align-items: center;
+
+      list-style: none;
+
+      &:first-of-type {
+        flex-shrink: 1;
+      }
+
+      &:last-of-type {
+        flex-shrink: 0;
+      }
+
+      li {
+        position: relative;
+        inset: 0;
+      }
+
+      &.navbar_center_links li {
+        padding: 6px 12px;
+      }
+
+      &.navbar_side_buttons li {
+        padding: 0px 4px;
+      }
+    }
   }
 
   .top_navbar_container  {
@@ -183,29 +212,6 @@
 
     border-radius: 8px;
     background-color: var(--color-accent);
-  }
-
-  .top_navbar ul {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-
-    list-style: none;
-
-    &:first-of-type {
-      flex-shrink: 1;
-    }
-
-    &:last-of-type {
-      flex-shrink: 0;
-    }
-
-    li {
-      position: relative;
-      inset: 0;
-
-      padding: 2px;
-    }
   }
 
   .top_navbar ul li a {
