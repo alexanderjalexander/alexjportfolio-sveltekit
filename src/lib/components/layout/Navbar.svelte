@@ -1,4 +1,3 @@
-<!-- TODO: IMPLEMENT -->
 <script lang="ts">
   import { siteConfig } from '../../config/site';
   import type { ExtLink } from '../../config/site';
@@ -114,7 +113,6 @@
     </ul>
   </div>
   </div>
-  <!-- TODO: MOBILE STUFF -->
   {#if isMobile && hamburgerMenuOpen}
     <div
       class="mobile_menu"
