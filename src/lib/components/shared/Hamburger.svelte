@@ -46,6 +46,10 @@
 
       transition: all 0.25s cubic-bezier(0.42, 0.27, 0.07, 1);
 
+      @media(prefers-reduced-motion: reduce) {
+        transition: all 0s ease;
+      }
+
     }
 
     &.open {

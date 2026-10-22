@@ -4,7 +4,7 @@
   import type { ExtLink } from '../../config/site';
 
   import { page } from '$app/state';
-  import { backOut } from 'svelte/easing';
+  import { backIn, backOut } from 'svelte/easing';
   import { scale, slide } from 'svelte/transition';
   import { prefersReducedMotion } from 'svelte/motion';
 
@@ -116,13 +116,24 @@
   </div>
   <!-- TODO: MOBILE STUFF -->
   {#if isMobile && hamburgerMenuOpen}
-    <div class="mobile_menu">
+    <div
+      class="mobile_menu"
+      in:slide={{ axis: 'x', duration: EASE_MS, easing: backOut }}
+      out:slide={{ axis: 'x', duration: EASE_MS, easing: backIn }}
+    >
       <ul
         class="navbar_mobile_menu_links"
       >
-        {#each navItems as { href, label } (href)}
-          <li>
-            <a {href}>{label}</a>
+        {#each navItems as { href, label }, idx (href)}
+          {@const isActive = page.url.pathname === href}
+          <li
+            in:scale|global={{
+              delay: idx * EASE_MS/5,
+              duration: EASE_MS,
+              easing: backOut
+            }}
+          >
+            <a {href} aria-current={isActive ? 'page' : undefined}>{label}</a>
           </li>
         {/each}
       </ul>
@@ -221,20 +232,27 @@
     border-radius: 8px;
 
     font-family: var(--font-display);
-    font-variation-settings: 'wdth' 95, 'opsz' 50;
+    font-variation-settings: 'wdth' 85, 'opsz' 50;
     text-transform: uppercase;
     text-wrap: nowrap;
 
     z-index: 10;
 
-    transition: all 0.5s cubic-bezier(0.42, 0.27, 0.07, 1);
+    transition: all 0.25s cubic-bezier(0.42, 0.27, 0.07, 1);
 
     @media (prefers-reduced-motion: reduce) {
       transition: all 0s ease-in-out;
     }
 
+    @media (hover: hover) {
+      &:hover {
+        font-variation-settings: 'wdth' 95, 'opsz' 0;
+        font-weight: 600;
+      }
+    }
+
     &[aria-current='page'] {
-      font-weight: 800;
+      font-weight: 900;
       font-variation-settings:
         'wdth' 100,
         'opsz' 0;
@@ -243,7 +261,7 @@
   }
 
   .navbar_center_links {
-    font-size: 1rem;
+    font-size: 1.2rem;
   }
 
   .navbar_side_buttons {
@@ -251,11 +269,80 @@
   }
 
   .mobile_menu {
+    display: block;
     width: 100%;
     height: 100lvh;
 
-    .navbar_mobile_menu_links {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
 
+    padding-top: calc(4rem + 2px);
+
+    overflow-y: auto;
+
+    background: color-mix(in srgb, var(--color-primary), transparent 90%);
+    border-bottom: 2px solid var(--color-secondary);
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    .navbar_mobile_menu_links {
+      display: block;
+
+      text-align: center;
+    }
+
+    .navbar_mobile_menu_links li {
+      width: 100%;
+
+      transition: all 0.25s cubic-bezier(0.42, 0.27, 0.07, 1);
+
+      @media (prefers-reduced-motion: reduce) {
+        transition: all 0s ease-in-out;
+      }
+
+      &:has(> a:hover) {
+        background-color: var(--color-secondary);
+      }
+
+      &:has(> a[aria-current='page']) {
+        background-color: var(--color-accent);
+      }
+    }
+
+    .navbar_mobile_menu_links li a {
+      display: block;
+
+      width: 100%;
+      padding: 1rem 1.5rem;
+
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: normal;
+      font-variation-settings: 'wdth' 85, 'opsz' 50;
+      text-transform: uppercase;
+      text-wrap: nowrap;
+
+      transition: all 0.25s cubic-bezier(0.42, 0.27, 0.07, 1);
+
+      @media (prefers-reduced-motion: reduce) {
+        transition: all 0s ease-in-out;
+      }
+
+      @media (hover: hover) {
+        &:hover {
+          font-variation-settings: 'wdth' 95, 'opsz' 0;
+          font-weight: 600;
+        }
+      }
+
+      &[aria-current='page'] {
+        font-variation-settings: 'wdth' 95, 'opsz' 0;
+        font-weight: 900;
+        color: black;
+      }
     }
   }
 </style>
