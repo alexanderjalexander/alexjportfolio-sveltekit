@@ -187,7 +187,6 @@
     // Cleanup on component destruction :P
     return () => {
       window.removeEventListener('resize', animationLoop);
-      observer.disconnect();
     };
   });
 </script>
