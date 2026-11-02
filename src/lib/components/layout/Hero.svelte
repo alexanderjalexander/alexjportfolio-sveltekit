@@ -63,16 +63,21 @@
     let drawGridDone = false;
 
     /**
-     * Draws the grid squares onto the div itself.
-     * @param elapsed A non-eased float that tracks progression of the animation.
+     * Updates the dimensions of the HTML canvas element
      */
-    function drawGrid(elapsed: number): void {
+    function updateCanvasDimensions(): void {
       // Responsiveness Checks
       gridCanvas.width = heroContainer.offsetWidth;
       gridCanvas.height = heroContainer.offsetHeight;
       gridCanvas.style.width = heroContainer.offsetWidth + 'px';
       gridCanvas.style.height = heroContainer.offsetHeight + 'px';
+    }
 
+    /**
+     * Draws the grid squares onto the div itself.
+     * @param elapsed A non-eased float that tracks progression of the animation.
+     */
+    function drawGrid(elapsed: number): void {
       // Coordinate positions as consts
       const width = gridCanvas.width;
       const height = gridCanvas.height;
@@ -82,20 +87,14 @@
       // Main Center Line
       const centerProgress = elapsed / duration;
       drawLine(
-        centerX - expoOut(centerProgress) * width * 0.5,
-        centerY,
-        centerX + expoOut(centerProgress) * width * 0.5,
-        centerY,
-        true,
-        3
+        centerX - expoOut(centerProgress) * width * 0.5, centerY,
+        centerX + expoOut(centerProgress) * width * 0.5, centerY,
+        true, 3
       );
       drawLine(
-        centerX,
-        centerY - expoOut(centerProgress) * height * 0.5,
-        centerX,
-        centerY + expoOut(centerProgress) * height * 0.5,
-        true,
-        3
+        centerX, centerY - expoOut(centerProgress) * height * 0.5,
+        centerX, centerY + expoOut(centerProgress) * height * 0.5,
+        true, 3
       );
 
       let verticalRingsDone = false;
@@ -163,6 +162,14 @@
     }
 
     /**
+     * Draws the overlapping, horizontally and vertically scrolling text segments.
+     * @param elapsed A non-eased float that tracks progression of the animation.
+     */
+    function drawText(elapsed: number): void {
+      // TODO: Implement
+    }
+
+    /**
      * Main animation draw loop.
      * @param timestamp timestamp in milliseconds
      */
@@ -170,11 +177,13 @@
       if (startTime === null) startTime = timestamp;
       const elapsed = timestamp - startTime;
 
-      drawGrid(elapsed);
-
       if (!drawGridDone) {
-        requestAnimationFrame(loop);
+        drawGrid(elapsed);
       }
+
+      drawText(elapsed);
+
+      requestAnimationFrame(loop);
     }
 
     // Necessary resize observer
