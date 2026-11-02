@@ -181,14 +181,6 @@
     const animationLoop = () => requestAnimationFrame(loop);
     window.addEventListener('resize', animationLoop);
 
-    // Necessary mutation observer, for the DaisyUI 'data-theme', light and dark mode
-    const observer = new MutationObserver(animationLoop);
-
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['data-theme'],
-    });
-
     // Loop the darn thing
     animationLoop();
 
