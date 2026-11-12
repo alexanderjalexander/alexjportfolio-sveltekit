@@ -2,29 +2,41 @@
 <script lang="ts">
   import { expoOut } from 'svelte/easing';
 
+  // Lines Configuration
   const GRID_CELL_SIZE = 50;
   const GRID_ANIM_TOTAL_MS = 500;
   const GRID_ANIM_LINE_OFFSET_MS = 0.05 * GRID_ANIM_TOTAL_MS;
 
+  // Dots Configuration
+  const DOTS_SPACING = 24;
+  const DOTS_BASE_RADIUS = 4;
+
+  // Main Control Elements
   let heroContainer: HTMLDivElement;
   let gridCanvas: HTMLCanvasElement;
+  let dotsCanvas: HTMLCanvasElement;
 
+  // Grid Canvas useEffect
   $effect(() => {
     if (!gridCanvas) return;
 
-    const ctx = gridCanvas.getContext('2d')!;
+    const ctx: CanvasRenderingContext2D = gridCanvas.getContext('2d')!;
 
     // Timing & Animation Control
     let startTime: number | null = null;
     const duration = GRID_ANIM_TOTAL_MS;
 
     /**
-     * Applies base styling to the drawing context.
-     * @param strokeWidth The width of future lines to draw.
+     * Applies a base styling to the desired 2D canvas context.
+     * @param {number} strokeWidth The width of the line, in pixels.
      */
     function applyStyling(strokeWidth: number = 1): void {
       const style = getComputedStyle(document.documentElement);
       const lineColor = style.getPropertyValue('--color-secondary').trim();
+      ctx.font = '800 24px "Bricolage Grotesque", sans-serif';
+      ctx.textBaseline = 'top';
+      ctx.textRendering = 'optimizeSpeed';
+      ctx.fillStyle = lineColor;
       ctx.strokeStyle = lineColor;
       ctx.lineWidth = Math.max(0, strokeWidth);
     }
@@ -61,17 +73,6 @@
 
     // Main Lines State
     let drawGridDone = false;
-
-    /**
-     * Updates the dimensions of the HTML canvas element
-     */
-    function updateCanvasDimensions(): void {
-      // Responsiveness Checks
-      gridCanvas.width = heroContainer.offsetWidth;
-      gridCanvas.height = heroContainer.offsetHeight;
-      gridCanvas.style.width = heroContainer.offsetWidth + 'px';
-      gridCanvas.style.height = heroContainer.offsetHeight + 'px';
-    }
 
     /**
      * Draws the grid squares onto the div itself.
@@ -162,14 +163,6 @@
     }
 
     /**
-     * Draws the overlapping, horizontally and vertically scrolling text segments.
-     * @param elapsed A non-eased float that tracks progression of the animation.
-     */
-    function drawText(elapsed: number): void {
-      // TODO: Implement
-    }
-
-    /**
      * Main animation draw loop.
      * @param timestamp timestamp in milliseconds
      */
@@ -179,29 +172,99 @@
 
       if (!drawGridDone) {
         drawGrid(elapsed);
+        requestAnimationFrame(loop);
       }
-
-      drawText(elapsed);
-
-      requestAnimationFrame(loop);
     }
 
     // Necessary resize observer
     const animationLoop = () => requestAnimationFrame(loop);
-    window.addEventListener('resize', animationLoop);
 
     // Loop the darn thing
     animationLoop();
 
     // Cleanup on component destruction :P
+    return () => {};
+  });
+
+  // Dots Canvas UseEffect
+  $effect(() => {
+    if (!dotsCanvas) return;
+
+    const ctx: CanvasRenderingContext2D = dotsCanvas.getContext('2d')!;
+
+    // Timing & Animation Control
+    let startTime: number | null = null;
+    const duration = GRID_ANIM_TOTAL_MS;
+
+    /**
+     * Applies a base styling to the canvas context.
+     */
+    function applyStyling(): void {
+      const style = getComputedStyle(document.documentElement);
+      const lineColor = style.getPropertyValue('--color-secondary').trim();
+      ctx.font = '800 24px "Bricolage Grotesque", sans-serif';
+      ctx.textBaseline = 'top';
+      ctx.textRendering = 'optimizeSpeed';
+      ctx.fillStyle = lineColor;
+      ctx.strokeStyle = lineColor;
+    }
+
+    /**
+     * Draws the continuously animated halftone effect.
+     * @param elapsed A non-eased float that tracks progression of the animation.
+     */
+    function drawHalftone(elapsed: number): void {
+      // Apply the mandatory styling
+      applyStyling();
+
+      // TODO: Implement
+      const rowHeight = GRID_CELL_SIZE;
+
+      const textToRepeat = "AJ ";
+      const textMeasure = ctx.measureText(textToRepeat);
+      const textWidth = textMeasure.width;
+    }
+
+    // Necessary resize observer
+    const animationLoop = () => requestAnimationFrame(loop);
+
+    // Loop the darn thing
+    animationLoop();
+
+    // Cleanup on component destruction :P
+    return () => {};
+  });
+
+  // Resize Window UseEffect
+  $effect(() => {
+    if (!gridCanvas || !dotsCanvas) {
+      return;
+    }
+
+    /**
+     * Updates the dimensions of the HTML canvas element
+     */
+    function updateCanvasDimensions(): void {
+      // Responsiveness Checks
+      gridCanvas.width = heroContainer.offsetWidth;
+      gridCanvas.height = heroContainer.offsetHeight;
+      gridCanvas.style.width = heroContainer.offsetWidth + 'px';
+      gridCanvas.style.height = heroContainer.offsetHeight + 'px';
+    }
+
+    // Add the event listener
+    window.addEventListener('resize', updateCanvasDimensions);
+
+    // Cleanup
     return () => {
-      window.removeEventListener('resize', animationLoop);
-    };
+      window.removeEventListener('resize', updateCanvasDimensions);
+    }
   });
 </script>
 
 <div bind:this={heroContainer} class="hero_container">
   <canvas bind:this={gridCanvas}></canvas>
+  <canvas bind:this={dotsCanvas}></canvas>
 </div>
 
 <style>
